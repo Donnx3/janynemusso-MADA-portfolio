@@ -2,6 +2,44 @@
 title: "About me"
 ---
 
-Add some text and a figure describing myself.
+![](images/20230616_004639.jpg){fig-align="center"}
 
-For details, see the exercise instructions. 
++:--------------------------------------------------------------------:+
+| # Hi! I'm Janyne (ju-neen).                                          |
++----------------------------------------------------------------------+
+
+Welcome to my page. I'm a budding researcher with silly dreams and aspirations.
+
+## Background
+
+At the moment, I'm pursuing my Master in Public Health with concentrations in Disaster Management and Epidemiology. For the past five years I've been a bedside emergency department nurse through out Atlanta, Georgia and a modern Pandemic. I became a mama in 2022 to a spunky little warrior girl. This year I started my career in quality improvement and education at Grady Memorial Hospital. I'm eager to use this class's information to improve quality of care for the population we serve.
+
+## Foreground
+
+I hope to pursue mixed-method research focusing on the intersection of conflict or disasters and public health. Though this is my end goal, I have such a variety of interest. Like a squirrel in a nut forest, I hop from tree to tree.
+
+## Hobbies
+
+I love learning new and obscure things. I love books, podcasts, articles, short stories, poem, art, philosophy or any intriguing way of thinking or creating. Below are few of the areas my mind dwells in lately!
+
+### **Crime Junkies** 
+
+If you like crime stories, this is a great podcast. They do amazing work in positively using thier voice and audience to bring attention to lesser known stories. Take a listen to this episode: [Missing Lucely Aramburo](#0), and let me know what ya think.
+
+### Pod Save the World
+
+This is a wonderful podcast that provides an insider perspective to global news. The hosts use to work for the Obama administration. This episode is about the Israel, Hamas, and Palestine Conflict: [How Israel's War with Hamas Could Escalate Into a Regional Conflict](https://crooked.com/podcast/how-israels-war-with-hamas-could-escalate-into-a-regional-conflict/)
+
+### Books
+
+I've been reading more and more lately, but I find more books than I'm able to consume. Here are my eventually will read lists on [Amazon](https://www.amazon.com/hz/wishlist/ls/2DIEYURXTFDHS?ref_=wl_share) & [GoodReads](goodreads.com/Donnx3). If you see any I should prioritize, let me know! I love a good recommendation.
+
+#### Florence Nightingale
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| *The idea that one might speculate about the development of the random element through references in literature of all kinds-classical, archaeological, biographical, poetical and fictional-is one which came to me as a student some thirty years ago. Since then, as friends and colleagues learnt of my interest, the number of references to which my attention has been drawn has increased rapidly, each year filling many notebooks. It is too much to hope that this list of references can ever be completed, but it is, I think, fair to saythat many of the most significant have been made known to me.* |
+
+-F. N. David
+
+Aside from being on the forefront of nursing, Florence Nightingale used data and statistics to prove the need for nursing in a battleground filled with men. She was a warrior in her own era, one who stood up to generals, cleaned the infected, and held the hands of the dying. She was never my inspiration for nursing, but the truth is she is my inspiration for data analysis, and using evidence as power for change. As any female writer in the 1960s intending on publishing, she signed her book with initials allowing the masses to believe she was male. With the title [Games, Gods, and Gambling: A History of Probability and Statistical Ideas](https://archive.org/details/gamesgodsgambling-david-1962), I think its clear she was quite a spunky lady.
