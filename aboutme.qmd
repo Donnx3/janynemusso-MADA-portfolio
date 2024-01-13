@@ -4,9 +4,9 @@ title: "About me"
 
 ![](images/20230616_004639.jpg){fig-align="center"}
 
-+:--------------------------------------------------------------------:+
-| # Hi! I'm Janyne (ju-neen).                                          |
-+----------------------------------------------------------------------+
++:---------------------------:+
+| # Hi! I'm Janyne (ju-neen). |
++-----------------------------+
 
 Welcome to my page. I'm a budding researcher with silly dreams and aspirations.
 
@@ -22,7 +22,7 @@ I hope to pursue mixed-method research focusing on the intersection of conflict 
 
 I love learning new and obscure things. I love books, podcasts, articles, short stories, poem, art, philosophy or any intriguing way of thinking or creating. Below are few of the areas my mind dwells in lately!
 
-### **Crime Junkies** 
+### **Crime Junkies**
 
 If you like crime stories, this is a great podcast. They do amazing work in positively using thier voice and audience to bring attention to lesser known stories. Take a listen to this episode: [Missing Lucely Aramburo](#0), and let me know what ya think.
 
