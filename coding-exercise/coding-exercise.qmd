@@ -1,5 +1,90 @@
 ---
 title: "R Coding Exercise"
 ---
+```{r}
+library("dslabs") #look at and play with data from dslabs package
+library("renv")
+library("tidyverse")
+library("modelr")
+library("ggplot2")
+```
 
-Placeholder file for the future R coding exercise.
+data is from gapminder within dslabs; contains health and income outcomes for countries from 1960-2016
+
+```{r}
+#look at help file for gapminder data
+help(gapminder)
+# get an overview of data structure
+str(gapminder)
+#get a summary of data
+summary(gapminder)
+#determine the type of object gapminder is
+class(gapminder)
+```
+
+Step 1 identify all countries within Africa and assign them to the variable africadata; then run a str and summary to the africadata; there should be 2907 observations noted within the str
+
+```{r}
+africadata <- gapminder |> filter(continent=="Africa")
+summary(africadata)
+str(africadata)
+```
+
+Step 2 split africadata in two new objects: (1) infant_mortality and life_expectancy; (2) population and life_expectancy
+
+```{r}
+africa_infantdata <- africadata |> select(infant_mortality, life_expectancy)
+africa_populationdata <- africadata |> select(population, life_expectancy) |> mutate(logpop = log(population))
+summary(africa_populationdata)
+```
+
+Step 3 Plot A : life expectancy as a function of infant mortality & Plot B : life expectancy as a function of population size (log scale)
+
+```{r}
+ggplot(africa_infantdata, aes(infant_mortality, life_expectancy)) + geom_point()
+ggplot(africa_populationdata, aes(logpop,life_expectancy))+geom_point()
+```
+
+Step 4 (A) use the lm function (linear model) and fit life expectancy as the outcome, and infant mortality as teh predictor. & (B) Use the lm function and fit life expectancy as the outcome and population size as the predictor.
+
+```{r}
+fit1 <-lm(life_expectancy~infant_mortality, africa_infantdata)
+fit2 <-lm(life_expectancy~logpop, africa_populationdata)
+summary(fit1)
+summary(fit2)
+#create scatterplot with fitted regression
+ggplot(africa_infantdata, aes(x=infant_mortality, y=life_expectancy))+geom_point()+stat_smooth(method="lm")
+ggplot(africa_populationdata, aes(x=logpop, y=life_expectancy))+geom_point()+stat_smooth(method="lm")
+```
+
+The streaks of data are related to the yearly data collection from an origin. The plots created include a third co-variant of time which can hide the true relationship between life expectancy and infant mortality or population. When looking at the population plot, we can see there is no trend; The streaks are the countries yearly data.
+
+Step 5 Remove missing values for infant mortality & only use data for the year 2000
+
+```{r}
+#Find years with missing data
+infant_missingdata <- unique(africadata$year[is.na(africadata$infant_mortality)])
+
+#Exclude the years with missing data
+years_to_include <- setdiff(unique(africadata$year), c(1981, 2016))
+
+#Extract data for the year 2000
+africadata_2000 <- africadata[africadata$year %in% years_to_include & africadata$year == 2000, ] |> mutate(logpop=log(population))
+
+str(africadata_2000)
+summary(africadata_2000)
+```
+
+Step 6 Plotting the data cleaning from step 5
+
+```{r}
+fit3 <-lm(life_expectancy~infant_mortality, africadata_2000)
+fit4 <-lm(life_expectancy~logpop, africadata_2000)
+summary(fit3)
+summary(fit4)
+#create scatterplot with fitted regression
+ggplot(africadata_2000, aes(x=infant_mortality, y=life_expectancy))+geom_point()+stat_smooth(method="lm")
+ggplot(africadata_2000, aes(x=population, y=life_expectancy))+geom_point()+stat_smooth(method="lm")
+```
+
+We can see the relationship between infant_mortality and life_expectancy is statistically significant. As the infant mortality increases, the life expectancy decreases when comparing the countries within Africa in 2000. When observing the relationship between population and life expectancy there is no statistically significant relationship when comparing the African countries data in 2000.
