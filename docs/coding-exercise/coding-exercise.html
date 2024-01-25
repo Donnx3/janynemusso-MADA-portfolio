@@ -552,8 +552,71 @@ F-statistic: 0.517 on 1 and 49 DF,  p-value: 0.4755</code></pre>
 </div>
 </div>
 <p>We can see the relationship between infant_mortality and life_expectancy is statistically significant. As the infant mortality increases, the life expectancy decreases when comparing the countries within Africa in 2000. When observing the relationship between population and life expectancy there is no statistically significant relationship when comparing the African countries data in 2000.</p>
+<hr>
+<section id="this-section-contributed-by-liza-hall." class="level2">
+<h2 class="anchored" data-anchor-id="this-section-contributed-by-liza-hall.">This section contributed by Liza Hall.</h2>
+<p>For my further analysis, I chose to look at the dataset movielens. I specifically explored movie year, rating, and genres.</p>
+<hr>
+<p>Loading packages, dslabs, tidyverse, and stringr.</p>
+<pre><code># load packages
+library(dslabs)
+library(tidyverse)
+library(stringr)</code></pre>
+<p>Using stringr to filter and select for movies with only one genre.</p>
+<pre><code># filter to select movies with only one genre
+movielens_single_genre &lt;- subset(movielens, str_count(genres, "\\|") == 0)</code></pre>
+<p>Filtering to select for only movies from 1970-1979.</p>
+<pre><code># filter to select only movies from the 70s
+movielens_single_genre70s &lt;- subset(movielens_single_genre, year %in% 1970:1979)</code></pre>
+<p>Creating subsets for rating/genres, year/genres, and year/genres/rating. This is done for graphing and analysis purposes.</p>
+<pre><code># creating subsets for rating/genres, year/genres, and year/genres/rating.
+rating_genres &lt;- movielens_single_genre70s[, c("rating", "genres")]
+year_genres &lt;- movielens_single_genre70s[, c("year", "genres")]
+year_genres_rating &lt;- movielens_single_genre70s[, c("year", "genres", "rating")]</code></pre>
+<p>Using tidyverse to plot ratings vs genres.</p>
+<pre><code># plot rating vs genres
+p1 &lt;- ggplot(rating_genres, aes(x = rating, y = genres))+geom_point()+
+  ggtitle('Rating vs Genres [70s]')+
+  theme_classic()+
+  xlab('Rating')+
+  ylab('Genres')+
+  theme(plot.caption = element_text(hjust=0, face="bold"))
+  plot(p1)</code></pre>
+<p><img src="images/ratingvgenres.png" class="img-fluid"></p>
+<p>Using tidyverse to plot years vs genres.</p>
+<pre><code># plot year vs genres
+p2 &lt;- ggplot(year_genres, aes(x = year, y = genres))+geom_point()+
+  ggtitle('Year vs Genres [70s]')+
+  theme_classic()+
+  xlab('Year')+
+  ylab('Genres')+
+  theme(plot.caption = element_text(hjust=0, face="bold"))
+  plot(p2)</code></pre>
+<p><img src="images/yearvgenre.png" class="img-fluid"></p>
+<p>Using tidyverse to plot rating vs year, with data points colored by genre.</p>
+<pre><code># make genres a factor (for color coding) 
+year_genres_rating$genres &lt;- factor(year_genres_rating$genres)
+
+# plot rating vs year, with data points color coded by genre  
+p3 &lt;- ggplot(year_genres_rating, aes(x = rating, y = year, color=genres))+geom_point()+
+  ggtitle('Rating vs Years [70s]')+
+  theme_classic()+
+  xlab('Rating')+
+  ylab('Year')+
+  theme(plot.caption = element_text(hjust=0, face="bold"))
+  plot(p3)</code></pre>
+<p><img src="images/colors.png" class="img-fluid"></p>
+<p>Statistical analysis using simple fit models for rating/genres and year/genres. Fit 2 (years/genres) had a lower p-value, and thus is the better fit.</p>
+<pre><code> # simple model fits for rating/genres and year/genres
+  fit1 &lt;- lm(rating ~ genres, data = movielens_single_genre70s)
+  fit2 &lt;- lm(year ~ genres, data = movielens_single_genre70s)
+  
+  # stats summary for fits 1 and 2
+  summary(fit1)
+  summary(fit2)</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
