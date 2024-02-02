@@ -1,0 +1,78 @@
+```{r}
+library(tidyverse)
+library(scales)
+library(tidytext)
+library(textdata)
+library(dslabs)
+library(gutenbergr)
+```
+
+The Public Domain works available off Gutenberg. If we can look at the sentiments of Pride and Prejudice? Could we look at the sentiments of all her books and compare them to each other?
+
+```{r}
+works <-gutenberg_works(languages="en",
+                only_text=TRUE,
+                rights=c("Public domain in the USA.", "None"),
+                distinct=TRUE,
+                all_languages=FALSE,
+                only_languages=TRUE
+)
+
+austen_works <- works |> filter(str_detect(author, "Austen, Jane"))
+print(austen_works)
+
+```
+
+Obtain a book and turn the words into a tibble. Need to remove frequently used words.
+
+```{r}
+Pride_Prejudice_works <- works |> filter(str_detect(title, "Pride and Prejudice")) #All avaible Pride and Prejudice
+summary(austen_works)
+str(austen_works)
+
+pride_prejudice <- Pride_Prejudice_works$gutenberg_id[2] #contains the metadata
+pride_prejudice_book<-gutenberg_download(37431) #contains the book content
+```
+
+```{r}
+pride_prejudice_words <- pride_prejudice_book |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=1) #contains the words within the book, last pipeline places a unique identifier for the words
+summary(pride_prejudice_words)
+str(pride_prejudice_words)
+```
+
+Next, we can obtain all of Austen's aviable books. I included a book about her letters as well.
+
+```{r}
+persuasion_words <-gutenberg_download(105) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=2)#contains the words within Persuasion
+northanger_words <-gutenberg_download(121) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=3)#contains the words within Northanger Abbey
+mansfield_words <-gutenberg_download(141) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=4)#contains the words within Mansfield Park
+emma_words <-gutenberg_download(158) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=5)#contains the words within Emma
+ladysusan_words <-gutenberg_download(946) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=6)#contains the words within Lady Susan
+love_words <-gutenberg_download(1212) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=7)#contains the words within Love and Friendship
+sense_words <-gutenberg_download(21839) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word) |> mutate(book=8)#contains the words within Sense and Sensibility
+letters_words <-gutenberg_download(42078) |> unnest_tokens(word,text) |>count(word) |> arrange(desc(n)) |> filter(!word %in% stop_words$word)|> mutate(book=9) #contains the words within The Letters of Jane Austen
+
+```
+
+Using tidytext functions words can be divided into positive and negative sentiments (bing), provided with a score from -5 to 5 (afinn), loughran and nrc provide additional types of sentiments outside of positive and negative such as constraining, litigious, anger, anticipation etc. All the tables are then appended into the one table, defined by a book number (1-9). The table is then matched to sentiments and a score.
+
+```{r}
+afinn <- get_sentiments("afinn") |> select(word, value)
+nrc <- get_sentiments("nrc") |> select(word,sentiment)
+loughran <- get_sentiments("loughran") |> select(word,sentiment)
+austens_sentiments <- bind_rows(pride_prejudice_words,persuasion_words, northanger_words, mansfield_words, emma_words, ladysusan_words, love_words, sense_words, letters_words) |> inner_join(afinn, by="word", relationship="many-to-many") |> inner_join(nrc, by="word", relationship="many-to-many") |>inner_join(loughran, by="word",relationship="many-to-many")
+
+summary(austens_sentiments)
+str(austens_sentiments)
+
+
+```
+
+```{r}
+ggplot(austens_sentiments, aes(x = book, y = value)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x labels for better readability
+  labs(x = "Book", y = "Sentiment Value", title = "Sentiments by Book")
+```
+
+"Mansfield" and "Sense and Sensibility" have a much wider range of sentiments when compared to the rest of Austen's books.
